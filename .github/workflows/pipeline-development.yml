@@ -102,7 +102,7 @@ jobs:
       run: echo Testes funcionais executados com sucesso         
 
   push-image:
-    name: Publica ambiente de desenvolvimento
+    name: Enviar imagem Heroku
     needs: [code-quality, sec-tests, tests,  integration-tests, mutation-tests, regression-tests, functional-tests]
     runs-on: ubuntu-latest
     
@@ -122,3 +122,18 @@ jobs:
       with:
         push: true
         tags: registry.heroku.com/lab-devops-project/web:latest
+
+  deploy:
+    name: Publica ambiente Desenvolvimento
+    needs: push-image
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Login no Heroku
+      uses: docker/login-action@v2
+      with:
+        registry: registry.heroku.com
+        username: ${{ secrets.HEROKU_EMAIL }}
+        password: ${{ secrets.HEROKU_API_KEY }}
+    - name: Publicação
+      run: heroku container:release -a lab-devops-project web 
