@@ -23,9 +23,23 @@ jobs:
         cache: maven
     - name: Compilação
       run: mvn -B compile --file pom.xml
-      
-  quality-assurance:
+    
+  code-quality:
     name: Qualidade de Código
+    needs: build
+    runs-on: ubuntu-latest        
+    
+    steps:
+    - name: Git Checkout
+      uses: actions/checkout@v3
+    - name: Análise SonarCloud
+      run: ./mvn verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=lab-devops-project
+      env:
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        
+  tests:
+    name: Testes automatizados
+    needs: code-quality
     runs-on: ubuntu-latest    
     
     steps:
@@ -39,8 +53,4 @@ jobs:
         cache: maven
     - name: Testes Unitários
       run: mvn -B test --file pom.xml
-    - name: Análise com SonarCloud
-      uses: SonarSource/sonarcloud-github-action@v1.6
-      env:
-        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-      
+    
