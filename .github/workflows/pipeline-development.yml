@@ -104,8 +104,8 @@ jobs:
         tags: cwithiagoborba/lab-devops:latest
 
   heroku-images:
-    name: Envia imagem para ambiente de desenvolvimento
-    needs: [code-quality, sec-tests, tests,  integration-tests, mutation-tests]
+    name: Publica ambiente de desenvolvimento
+    needs:  dockerhub-images
     runs-on: ubuntu-latest
 
     steps:
