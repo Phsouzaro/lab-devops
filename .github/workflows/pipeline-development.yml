@@ -121,7 +121,7 @@ jobs:
       uses: docker/build-push-action@v3
       with:
         push: true
-        tags: registry.heroku.com/lab-devops-project/web:latest
+        tags: registry.heroku.com/xpto123-lab-devops-project/web:latest
 
   deploy:
     name: Publica ambiente Desenvolvimento
