@@ -29,7 +29,6 @@ jobs:
       
   quality-assurance:
     name: Qualidade de Código
-    needs: build
     runs-on: ubuntu-latest    
     
     steps:
@@ -41,6 +40,8 @@ jobs:
         java-version: '11'
         distribution: 'temurin'
         cache: maven
-    - name: Teste Unitários
+    - name: Testes Unitários
       run: mvn -B test --file pom.xml
+    - name: Análise com SonarCloud
+      uses: SonarSource/sonarcloud-github-action@v1.6
       
