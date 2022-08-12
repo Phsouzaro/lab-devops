@@ -38,6 +38,16 @@ jobs:
       run: ./mvnw verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=lab-devops-project
       env:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
+  sec-tests:
+    name: Análise de Segurança
+    needs: build
+    runs-on: ubuntu-latest    
+    
+    steps:
+    - name: Análise Horusec
+      id: run_horusec
+      uses: fike/horusec-action@v0.1
         
   tests:
     name: Testes automatizados
@@ -66,7 +76,7 @@ jobs:
       run: echo Testes integrados executados com sucesso
       
   mutation-tests:
-    name: Testes de mutação
+    name: Testes de Mutação
     needs: code-quality
     runs-on: ubuntu-latest    
     
