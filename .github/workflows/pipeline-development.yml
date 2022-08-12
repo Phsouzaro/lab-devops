@@ -84,7 +84,7 @@ jobs:
       run: echo Testes de mutação executados com sucesso      
       
   dockerhub-images:
-    name: Criação da Imagem para Dockerhub
+    name: Imagem para Dockerhub
     needs: [code-quality, sec-tests, tests,  integration-tests, mutation-tests]
     runs-on: ubuntu-latest
     
@@ -102,3 +102,20 @@ jobs:
         context: .
         push: true
         tags: cwithiagoborba/lab-devops:latest
+
+  heroku-images:
+    name: Envia imagem para ambiente de desenvolvimento
+    needs: [code-quality, sec-tests, tests,  integration-tests, mutation-tests]
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Criação e envio da imagem
+        uses: gonuit/heroku-docker-deploy@v1.3.3
+        with:
+          email: ${{ secrets.HEROKU_EMAIL }}
+          heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
+          heroku_app_name: ${{ secrets.HEROKU_APP_NAME }}
+          dockerfile_directory: ./
+          dockerfile_name: Dockerfile
+          docker_options: "--no-cache"
+          process_type: web
