@@ -83,8 +83,8 @@ jobs:
     - name: Simula execução de testes de mutação
       run: echo Testes de mutação executados com sucesso      
       
-  docker-images:
-    name: Compilação e envio de imagens
+  dockerhub-images:
+    name: Criação da Imagem para Dockerhub
     needs: [code-quality, sec-tests, tests,  integration-tests, mutation-tests]
     runs-on: ubuntu-latest
     
