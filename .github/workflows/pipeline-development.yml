@@ -99,8 +99,6 @@ jobs:
     - name: Criação e envio da imagem
       uses: docker/build-push-action@v3
       with:
-        context: .
-        file: Dockerfile
         push: true
         tags: cwithiagoborba/lab-devops:latest
 
