@@ -1,4 +1,4 @@
-name: Hello World CI!
+name: Hello World Integração Contínua!
 
 on:  
   push:
