@@ -100,7 +100,7 @@ jobs:
         username: ${{ secrets.HEROKU_EMAIL }}
         password: ${{ secrets.HEROKU_API_KEY }}
     - name: Build da imagem
-      run: docker build -t lab-devops-project:latest .    
+      run: docker build -f ./Dockerfile .
     - name: Tag da imagem
       run: docker tag lab-devops-project:latest registry.heroku.com/lab-devops-project/web
     - name: Push da imagem
